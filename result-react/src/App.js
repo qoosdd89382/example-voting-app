@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
+const isTestToggle = process.env.TEST || true;
+const socketServerPort = (isTestToggle ? 2000 : (process.env.PORT || 2000) );
+
 const socket = io(
-	'http://localhost:2000',
+	'http://localhost:' + socketServerPort,
 	{ transports: ['polling'] }
 );
 

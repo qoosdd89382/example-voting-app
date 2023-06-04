@@ -17,7 +17,7 @@ var express = require('express'),
 	});
 
 // 測試 toggle flag
-const isTestToggle = true;
+const isTestToggle = process.env.TEST || true;
 
 // 設定Socket.io的傳輸方式為polling (long polling)
 io.transports = ['polling'];
@@ -102,13 +102,13 @@ app.use(function (req, res, next) {
 	next();
 });
 
-//// 使用Express靜態中間件設定提供靜態檔案的目錄
-//app.use(express.static(__dirname + '/public'));
-//
-//// 定義根路由的處理函式，回傳index.html檔案
-//app.get('/', function (req, res) {
-//	res.sendFile(path.resolve(__dirname + '/public/index.html'));
-//});
+// 使用Express靜態中間件設定提供靜態檔案的目錄
+app.use(express.static(path.join(__dirname, 'build')));
+// 定義根路由的處理函式，回傳index.html檔案
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});
+
 
 // 啟動伺服器，監聽指定的埠號，並在控制台顯示啟動訊息
 server.listen(port, function () {
