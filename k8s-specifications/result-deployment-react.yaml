@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: result-react
+  name: result-react
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: result-react
+  template:
+    metadata:
+      labels:
+        app: result-react
+    spec:
+      containers:
+      - image: result-react
+        # TODO: push to origin, or use local minikube env with pull policy
+        name: result-react
+        ports:
+        - containerPort: 80
+          name: result-react
